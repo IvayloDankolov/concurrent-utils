@@ -29,7 +29,10 @@ describe('wait', () => {
 
       jest.runAllTimers();
 
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), timeout);
+      expect(setTimeout).toHaveBeenLastCalledWith(
+        expect.any(Function),
+        timeout
+      );
 
       expect(await p).toBeUndefined();
     }
@@ -37,8 +40,6 @@ describe('wait', () => {
 
   it('should reject garbage values', () => {
     const garbage = [NaN, +Infinity, -Infinity, 1e1000, -1];
-    garbage.forEach(g =>
-      expect(() => async.wait(g)).toThrowError()
-    );
+    garbage.forEach(g => expect(() => async.wait(g)).toThrowError());
   });
 });
