@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -30,7 +30,18 @@
     "trailingComma": "es5"
   },
   "name": "concurrent-utils",
-  "author": "Ivaylo Dankolov",
+  "author": "Ivaylo Dankolov <ivodankolov@gmail.com>",
+  "keywords": ["async", "concurrent", "promise", "generator", "AsyncIterable", "functional"],
+  "description": "Set of Typescript/Javascript utilities for managing complex concurrent tasks, built on top of modern JS's async functions and async generators.",
+  "homepage": "https://github.com/IvayloDankolov/concurrent-utils#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IvayloDankolov/concurrent-utils"
+  },
+  "bugs": {
+    "url": "https://github.com/IvayloDankolov/concurrent-utils/issues",
+    "email": "ivodankolov+concurrent_utils@gmail.com"
+  },
   "module": "dist/concurrent-utils.esm.js",
   "devDependencies": {
     "@types/jest": "^25.1.4",
