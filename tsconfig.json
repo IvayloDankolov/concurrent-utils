@@ -1,14 +1,8 @@
 {
-  "include": [
-    "src",
-    "types"
-  ],
+  "include": ["src", "types"],
   "compilerOptions": {
     "module": "esnext",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["esnext"],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
@@ -22,16 +16,13 @@
     "alwaysStrict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "downlevelIteration": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "*": [
-        "types/*",
-        "src/*",
-        "node_modules/*"
-      ]
+      "*": ["types/*", "src/*", "node_modules/*"]
     },
     "jsx": "react",
     "esModuleInterop": true
