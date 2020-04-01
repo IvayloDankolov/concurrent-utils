@@ -1,5 +1,5 @@
-import { async, seq, t } from '../src';
-import { maxSignedInteger } from '../src/constants';
+import { async, seq, t } from '../../src';
+import { maxSignedInteger } from '../../src/constants';
 
 jest.useFakeTimers();
 
