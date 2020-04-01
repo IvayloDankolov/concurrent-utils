@@ -14,8 +14,7 @@ describe('wait', () => {
 
     jest.runAllTimers();
 
-    const x = await p;
-    expect(x).toBeUndefined();
+    expect(await p).toBeUndefined();
   });
 
   it('sets a system timeout with the correct value', async () => {
