@@ -1,4 +1,4 @@
-import { async } from '../src';
+import { async, seq, t } from '../src';
 import { maxSignedInteger } from '../src/constants';
 
 jest.useFakeTimers();
@@ -18,12 +18,9 @@ describe('wait', () => {
   });
 
   it('sets a system timeout with the correct value', async () => {
-    const timeouts = [];
-    for (let i = 0; i < 100; ++i) {
-      timeouts[i] = Math.random() * maxSignedInteger;
-    }
+    const timeouts = seq.construct(() => Math.random() * maxSignedInteger, 100);
 
-    for (let timeout of timeouts) {
+    await t.forEach(timeouts, async timeout => {
       const p = async.wait(timeout);
 
       jest.runAllTimers();
@@ -34,7 +31,7 @@ describe('wait', () => {
       );
 
       expect(await p).toBeUndefined();
-    }
+    });
   });
 
   it('should reject garbage values', () => {
