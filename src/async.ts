@@ -4,7 +4,8 @@ import { maxSignedInteger } from './constants';
 /**
  * Returns a promise that automatically resolves after a specified time.
  *
- * @param timeout Time to wait before resolving promise (in milliseconds)
+ * @param timeout Time to wait before resolving promise (in milliseconds).
+ *  Due to {@link setTimeout} restrictions, cannot exceed {@link maxSignedInteger} milliseconds.
  */
 export const wait = (timeout: number): Promise<void> => {
   invariant(timeout >= 0, 'Wait time cannot be negative');
