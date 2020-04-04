@@ -18,8 +18,9 @@ describe('forEach', () => {
   });
 
   it('works for generator functions', () => {
-    const sequenceA = seq.numeric(0, 1, 100);
-    const sequenceB = seq.numeric(0, 1, 100);
+    const itemCount = 100;
+    const sequenceA = seq.numeric(0, 1, itemCount);
+    const sequenceB = seq.numeric(0, 1, itemCount);
 
     const aIterated: number[] = [];
     for (const item of sequenceA) {
@@ -35,14 +36,16 @@ describe('forEach', () => {
   });
 
   it('works for async generators', async () => {
+    const itemCount = 100;
+
     const asyncGen = async function* (count: number) {
       for (let i = 0; i < count; ++i) {
         yield await Promise.resolve(i);
       }
     };
 
-    const sequenceA = asyncGen(100);
-    const sequenceB = asyncGen(100);
+    const sequenceA = asyncGen(itemCount);
+    const sequenceB = asyncGen(itemCount);
 
     const aIterated: number[] = [];
     for await (const item of sequenceA) {
@@ -65,5 +68,87 @@ describe('forEach', () => {
     await t.forEach((async function* () {})(), handler);
 
     expect(handler).not.toBeCalled();
+  });
+
+  it('works for basic arrays with asynchronous handlers', async () => {
+    const itemCount = 100;
+    const arr: object[] = Array.from(seq.construct(() => ({}), itemCount));
+
+    const handler = jest.fn((_: object) => Promise.resolve(undefined));
+
+    const promise = t.forEach(arr, handler);
+
+    expect(handler).toBeCalledTimes(1); // Awaiting first promise
+
+    await promise;
+
+    expect(handler).toBeCalledTimes(itemCount);
+
+    arr.forEach((item, idx) => {
+      expect(handler).toHaveBeenNthCalledWith(idx + 1, item);
+    });
+  });
+
+  it('works for generator functions when using asynchronous handlers', async () => {
+    const itemCount = 100;
+    const sequenceA = seq.numeric(0, 1, itemCount);
+    const sequenceB = seq.numeric(0, 1, itemCount);
+
+    const aIterated: number[] = [];
+    for (const item of sequenceA) {
+      aIterated.push(item);
+    }
+
+    const bIterated: number[] = [];
+
+    const handler = jest.fn(item => {
+      bIterated.push(item);
+      return Promise.resolve(undefined);
+    });
+
+    const p = t.forEach(sequenceB, handler);
+
+    expect(handler).toBeCalledTimes(1);
+
+    await p;
+
+    expect(handler).toBeCalledTimes(itemCount);
+
+    expect(aIterated).toEqual(bIterated);
+  });
+
+  it('works for asynchronous generators when using asynchronous handlers', async () => {
+    const itemCount = 100;
+
+    const asyncGen = async function* (count: number) {
+      for (let i = 0; i < count; ++i) {
+        yield await Promise.resolve(i);
+      }
+    };
+
+    const sequenceA = asyncGen(itemCount);
+    const sequenceB = asyncGen(itemCount);
+
+    const aIterated: number[] = [];
+    for await (const item of sequenceA) {
+      aIterated.push(item);
+    }
+
+    const bIterated: number[] = [];
+    const handler = jest.fn(item => {
+      bIterated.push(item);
+      return Promise.resolve(undefined);
+    });
+
+    const p = t.forEach(sequenceB, handler);
+
+    // Different from other tests in that it's still awaiting the sequence item
+    expect(handler).not.toBeCalled();
+
+    await p;
+
+    expect(handler).toBeCalledTimes(itemCount);
+
+    expect(aIterated).toEqual(bIterated);
   });
 });
