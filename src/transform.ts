@@ -1,21 +1,25 @@
 import invariant from 'tiny-invariant';
 
 export function forEach<T>(
-  iterable: Iterable<T>,
-  handler: (item: T) => void
-): void;
-export function forEach<T>(
-  iterable: Iterable<T>,
-  handler: (item: T) => void | Promise<void>
-): Promise<void>;
-export function forEach<T>(
-  iterable: Iterable<T>,
-  handler: (item: T) => void
+  iterable: AsyncIterable<T>,
+  handler: (item: T) => Promise<void> | null | undefined
 ): Promise<void>;
 export function forEach<T>(
   iterable: AsyncIterable<T>,
-  handler: (item: T) => void | Promise<void>
+  handler: (item: T) => void
 ): Promise<void>;
+export function forEach<T>(
+  iterable: Iterable<T>,
+  handler: (item: T) => void
+): Promise<void>;
+export function forEach<T>(
+  iterable: Iterable<T>,
+  handler: (item: T) => Promise<void> | null | undefined
+): Promise<void>;
+export function forEach<T>(
+  iterable: Iterable<T>,
+  handler: (item: T) => void
+): void;
 export function forEach(iterable: any, handler: any) {
   if (iterable[Symbol.iterator] != null) {
     const iterator: Iterator<any> = iterable[Symbol.iterator]();
@@ -33,7 +37,7 @@ export function forEach(iterable: any, handler: any) {
       }
     }
     // Found a promise, need to fall back to async iteration
-    return async () => {
+    return (async () => {
       await foundPromise;
       while (true) {
         const next = iterator.next();
@@ -46,7 +50,7 @@ export function forEach(iterable: any, handler: any) {
           await handled;
         }
       }
-    };
+    })();
   } else if (iterable[Symbol.asyncIterator] != null) {
     return (async () => {
       for await (const item of iterable) {
