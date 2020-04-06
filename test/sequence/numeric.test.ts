@@ -72,17 +72,21 @@ describe('numeric', () => {
     // Testing this to the limit is left as an exercise for the creators of the Simulation.
     const cutoff = 1000;
 
-    const gen = seq.numeric({ from: 5, step: 10 });
+    let start = 5,
+      step = 10;
+    const gen = seq.numeric({ from: start, step });
     for (let i = 0; i < cutoff; ++i) {
       const { value, done } = gen.next();
-      expect(value).toBe(5 + 10 * i);
+      expect(value).toBe(start + step * i);
       expect(done).toBe(false);
     }
 
-    const genNeg = seq.numeric({ from: 42, step: -17 });
+    start = 42;
+    step = -17;
+    const genNeg = seq.numeric({ from: start, step });
     for (let i = 0; i < cutoff; ++i) {
       const { value, done } = genNeg.next();
-      expect(value).toBe(42 - 17 * i);
+      expect(value).toBe(start + step * i);
       expect(done).toBe(false);
     }
   });
