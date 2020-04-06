@@ -64,8 +64,24 @@ describe('numeric', () => {
   });
 
   it('rejects a step too small to clear the floating point gap', () => {
+    expect(() =>
+      seq.numeric({ from: Number.MAX_SAFE_INTEGER, step: 1 })
+    ).not.toThrow();
+    expect(() =>
+      seq.numeric({ from: Number.MAX_SAFE_INTEGER + 1, step: 1 })
+    ).toThrow();
+
+    expect(() =>
+      seq.numeric({ from: -Number.MAX_SAFE_INTEGER, step: -1 })
+    ).not.toThrow();
+    expect(() =>
+      seq.numeric({ from: -Number.MAX_SAFE_INTEGER - 1, step: -1 })
+    ).toThrow();
+
     expect(() => seq.numeric({ to: 1e100, step: 1 })).toThrow();
+    expect(() => seq.numeric({ to: 1e100, step: 1e84 })).not.toThrow();
     expect(() => seq.numeric({ to: -1e100, step: -1 })).toThrow();
+    expect(() => seq.numeric({ to: -1e100, step: -1e84 })).not.toThrow();
   });
 
   it('works for infinite sequences without taking infinite time', () => {

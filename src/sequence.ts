@@ -22,6 +22,11 @@ export function numeric(
     'All 3 arguments must be finite numbers.'
   );
 
+  invariant(
+    curr + step !== curr,
+    'Step must be large enough to clear the smallest gap in floating point numbers at the start of the sequence, and thus avoid infinite loops.'
+  );
+
   // Split into a regular and infinite loop to avoid checking end === undefined on every iteration
   if (end === undefined) {
     return (function* () {
