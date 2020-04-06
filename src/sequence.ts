@@ -1,16 +1,50 @@
-export function* numeric(start = 0, step = 1, end?: number) {
-  let curr = start;
+import invariant from 'tiny-invariant';
+
+export function numeric(
+  opts: {
+    from?: number;
+    to?: number;
+    step?: number;
+  } = {}
+) {
+  const step = opts.step ?? 1;
+  const end = opts.to;
+
+  let curr = opts.from ?? 0;
+
+  invariant(
+    step != 0,
+    'Numeric sequence step cannot be 0. This is usually a code smell for a miscalculated step. If you were actually to repeat the same numebr infinitely, consider using sequence.repeat or sequence.construct'
+  );
+
+  invariant(
+    isFinite(curr) && isFinite(step) && isFinite(end ?? 0),
+    'All 3 arguments must be finite numbers.'
+  );
 
   // Split into a regular and infinite loop to avoid checking end === undefined on every iteration
   if (end === undefined) {
-    while (true) {
-      yield curr;
-      curr += step;
-    }
+    return (function* () {
+      while (true) {
+        yield curr;
+        curr += step;
+      }
+    })();
   } else {
-    while (curr < end) {
-      yield curr;
-      curr += step;
+    if (step > 0) {
+      return (function* () {
+        while (curr <= end) {
+          yield curr;
+          curr += step;
+        }
+      })();
+    } else {
+      return (function* () {
+        while (curr >= end) {
+          yield curr;
+          curr += step;
+        }
+      })();
     }
   }
 }

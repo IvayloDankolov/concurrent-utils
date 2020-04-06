@@ -19,8 +19,8 @@ describe('forEach', () => {
 
   it('works for generator functions', () => {
     const itemCount = 100;
-    const sequenceA = seq.numeric(0, 1, itemCount);
-    const sequenceB = seq.numeric(0, 1, itemCount);
+    const sequenceA = seq.numeric({ from: 1, to: itemCount });
+    const sequenceB = seq.numeric({ from: 1, to: itemCount });
 
     const aIterated: number[] = [];
     for (const item of sequenceA) {
@@ -91,8 +91,8 @@ describe('forEach', () => {
 
   it('works for generator functions when using asynchronous handlers', async () => {
     const itemCount = 100;
-    const sequenceA = seq.numeric(0, 1, itemCount);
-    const sequenceB = seq.numeric(0, 1, itemCount);
+    const sequenceA = seq.numeric({ from: 1, to: itemCount });
+    const sequenceB = seq.numeric({ from: 1, to: itemCount });
 
     const aIterated: number[] = [];
     for (const item of sequenceA) {
