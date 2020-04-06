@@ -33,6 +33,10 @@ export function numeric(
   } else {
     // Do the step check outside the generator for maximum performance on the hot path.
     if (step > 0) {
+      invariant(
+        end - step < end,
+        'Step must be large enough to clear the smallest gap in floating point numbers at the end of the sequence, and thus avoid infinite loops.'
+      );
       return (function* () {
         while (curr <= end) {
           yield curr;
@@ -40,6 +44,10 @@ export function numeric(
         }
       })();
     } else {
+      invariant(
+        end - step > end,
+        'Step must be large enough to clear the smallest gap in floating point numbers at the end of the sequence, and thus avoid infinite loops.'
+      );
       return (function* () {
         while (curr >= end) {
           yield curr;

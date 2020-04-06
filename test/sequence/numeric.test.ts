@@ -63,6 +63,11 @@ describe('numeric', () => {
     expect(() => seq.numeric({ step: 0 })).toThrow();
   });
 
+  it('rejects a step too small to clear the floating point gap', () => {
+    expect(() => seq.numeric({ to: 1e100, step: 1 })).toThrow();
+    expect(() => seq.numeric({ to: -1e100, step: -1 })).toThrow();
+  });
+
   it('works for infinite sequences without taking infinite time', () => {
     // Testing this to the limit is left as an exercise for the creators of the Simulation.
     const cutoff = 1000;
