@@ -6,7 +6,7 @@ export function numeric(
     to?: number;
     step?: number;
   } = {}
-) {
+): Generator<number> {
   const step = opts.step ?? 1;
   const end = opts.to;
 
@@ -31,6 +31,7 @@ export function numeric(
       }
     })();
   } else {
+    // Do the step check outside the generator for maximum performance on the hot path.
     if (step > 0) {
       return (function* () {
         while (curr <= end) {
