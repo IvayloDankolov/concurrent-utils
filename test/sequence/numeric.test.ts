@@ -48,11 +48,11 @@ describe('numeric', () => {
   });
 
   it('rejects garbage parameter values', () => {
-    // const startGarbage = [NaN, +Infinity, -Infinity];
+    const startGarbage = [NaN, +Infinity, -Infinity];
     const stopGarbage = [NaN, +Infinity, -Infinity];
     const stepGarbage = [NaN, +Infinity, -Infinity, 0];
 
-    stopGarbage.forEach(from =>
+    startGarbage.forEach(from =>
       expect(() => seq.numeric({ from })).toThrowError()
     );
     stopGarbage.forEach(to => expect(() => seq.numeric({ to })).toThrowError());
