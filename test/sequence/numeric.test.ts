@@ -8,6 +8,9 @@ describe('numeric', () => {
       stepMax = 10;
     const itemsMin = 1,
       itemsMax = 10;
+
+    // Holy O(n^4), Batman!
+
     for (let start = startMin; start <= startMax; ++start) {
       for (let step = stepMin; step <= stepMax; ++step) {
         for (let items = itemsMin; items < itemsMax; ++items) {
@@ -48,17 +51,16 @@ describe('numeric', () => {
   });
 
   it('rejects garbage parameter values', () => {
-    const startGarbage = [NaN, +Infinity, -Infinity];
-    const stopGarbage = [NaN, +Infinity, -Infinity];
-    const stepGarbage = [NaN, +Infinity, -Infinity, 0];
+    const garbage = [NaN, +Infinity, -Infinity];
+    garbage.forEach(item => {
+      expect(() => seq.numeric({ from: item })).toThrowError();
+      expect(() => seq.numeric({ to: item })).toThrowError();
+      expect(() => seq.numeric({ step: item })).toThrowError();
+    });
+  });
 
-    startGarbage.forEach(from =>
-      expect(() => seq.numeric({ from })).toThrowError()
-    );
-    stopGarbage.forEach(to => expect(() => seq.numeric({ to })).toThrowError());
-    stepGarbage.forEach(step =>
-      expect(() => seq.numeric({ step })).toThrowError()
-    );
+  it('rejects a step of zero', () => {
+    expect(() => seq.numeric({ step: 0 })).toThrow();
   });
 
   it('works for infinite sequences without taking infinite time', () => {
