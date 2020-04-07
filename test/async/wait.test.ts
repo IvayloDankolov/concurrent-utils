@@ -18,16 +18,19 @@ describe('wait', () => {
   });
 
   it('sets a system timeout with the correct value', async () => {
-    const timeouts = seq.construct(() => Math.random() * maxSignedInteger, 100);
+    const durations = seq.construct(
+      () => Math.random() * maxSignedInteger,
+      100
+    );
 
-    await t.forEach(timeouts, async timeout => {
-      const p = async.wait(timeout);
+    await t.forEach(durations, async duration => {
+      const p = async.wait(duration);
 
       jest.runAllTimers();
 
       expect(setTimeout).toHaveBeenLastCalledWith(
         expect.any(Function),
-        timeout
+        duration
       );
 
       expect(await p).toBeUndefined();

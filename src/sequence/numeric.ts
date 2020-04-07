@@ -25,7 +25,7 @@ interface NumericOptions {
    * (e.g. `1e100+1===1e100` and would thus be disallowed)
    *
    * If an infinite generator is required, that must be done done
-   * by specificaly leaving `NumericOptions.to` as `undefined`.
+   * by specifically leaving `NumericOptions.to` as `undefined`.
    * @default 1
    */
   step?: number;
@@ -67,7 +67,7 @@ export default function numeric({
 
   invariant(
     step != 0,
-    'Numeric sequence step cannot be 0. This is usually a code smell for a miscalculated step. If you were actually to repeat the same numebr infinitely, consider using sequence.repeat or sequence.construct'
+    'Numeric sequence step cannot be 0. This is usually a code smell for a miscalculated step. If you were actually to repeat the same number infinitely, consider using sequence.repeat or sequence.construct'
   );
 
   invariant(

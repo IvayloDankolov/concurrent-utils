@@ -86,12 +86,12 @@ describe('numeric', () => {
 
   it('works for infinite sequences without taking infinite time', () => {
     // Testing this to the limit is left as an exercise for the creators of the Simulation.
-    const cutoff = 1000;
+    const limit = 1000;
 
     let start = 5,
       step = 10;
     const gen = seq.numeric({ from: start, step });
-    for (let i = 0; i < cutoff; ++i) {
+    for (let i = 0; i < limit; ++i) {
       const { value, done } = gen.next();
       expect(value).toBe(start + step * i);
       expect(done).toBe(false);
@@ -100,7 +100,7 @@ describe('numeric', () => {
     start = 42;
     step = -17;
     const genNeg = seq.numeric({ from: start, step });
-    for (let i = 0; i < cutoff; ++i) {
+    for (let i = 0; i < limit; ++i) {
       const { value, done } = genNeg.next();
       expect(value).toBe(start + step * i);
       expect(done).toBe(false);
