@@ -3,7 +3,7 @@ import { maxSignedInteger } from '../../src/constants';
 
 jest.useFakeTimers();
 
-describe('wait', () => {
+describe('async.wait', () => {
   it('correctly resolves the promise when timer runs out', async () => {
     const p = async.wait(0);
 

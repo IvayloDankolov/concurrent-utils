@@ -1,6 +1,6 @@
 import { seq } from '../../src';
 
-describe('numeric', () => {
+describe('sequence.numeric', () => {
   it('works for ascending sequences, respecting all 3 parameters', () => {
     const startMin = 0,
       startMax = 10;

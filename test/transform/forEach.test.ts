@@ -1,6 +1,6 @@
 import { t, seq } from '../../src';
 
-describe('forEach', () => {
+describe('transform.forEach', () => {
   it('works for basic arrays', () => {
     const itemCount = 100;
     const data: object[] = Array.from(seq.construct(() => ({}), itemCount));
