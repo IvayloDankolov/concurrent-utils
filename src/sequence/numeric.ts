@@ -34,7 +34,7 @@ interface NumericOptions {
  * Generates an arithmetic progression within the given limits.
  *
  * For positive step progressions, all items fall within the interval [start, end], or [start, +∞) for unbounded ones.
- * For negative step progressions, the end is treated as the lowest values, thus the bounds are
+ * For negative step progressions, the end is treated as the lowest value, thus the bounds are [end, start] or (-∞, end]
  *
  * @param opts The sequence parameters.
  *
