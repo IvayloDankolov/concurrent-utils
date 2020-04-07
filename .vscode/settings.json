@@ -3,5 +3,6 @@
     "editor.formatOnType": true,
     "javascript.format.semicolons": "insert",
     "typescript.format.semicolons": "insert",
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "cSpell.language": "en-GB"
 }
