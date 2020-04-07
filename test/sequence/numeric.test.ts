@@ -106,4 +106,9 @@ describe('numeric', () => {
       expect(done).toBe(false);
     }
   });
+
+  it('produces empty sequences when end < start (or end > start for decreasing ones)', () => {
+    expect(Array.from(seq.numeric({ from: 100, to: 99.99 }))).toEqual([]);
+    expect(Array.from(seq.numeric({ from: -1, to: 0, step: -1 }))).toEqual([]);
+  });
 });
