@@ -4,5 +4,8 @@
     "javascript.format.semicolons": "insert",
     "typescript.format.semicolons": "insert",
     "editor.tabSize": 2,
-    "cSpell.language": "en-GB"
+    "cSpell.language": "en-GB",
+    "cSpell.words": [
+        "tuple"
+    ]
 }
